@@ -49,12 +49,17 @@ function GenomeMaps(targetId, args) {
             this.wum = args.wum;
         }
     }
+    if(typeof args != 'undefined'){
+        this.width = args.width || this.width;
+        this.height = args.height || this.height;
+        this.wum  = args.wum  || this.wum;
+    }
 
 	this.accountData = null;
     
     var region = new Region();
 	
-    var url = $.url();
+    var url = $.url();//Check url paramaters
     var url_cbhost = url.param('CELLBASE_HOST');
     if(url_cbhost != null) {
 		CELLBASE_HOST = url_cbhost;
@@ -94,7 +99,6 @@ function GenomeMaps(targetId, args) {
 		region.load(this.getRegionByFeature(urlSnp,"snp"));
 	}
 
-//	if (this.opencga==true){
     this.headerWidget = new HeaderWidget({
             appname: this.title,
             description: this.description,
@@ -102,13 +106,8 @@ function GenomeMaps(targetId, args) {
             suiteId : this.suiteId,
             accountData:this.accountData
     });
-//	if($.cookie("gm_settings")){
-//		var species = JSON.parse($.cookie("gm_settings")).species;
-//	}else{
-//		var species = AVAILABLE_SPECIES[0];
-//	}
 
-	//CHECK genomeviewer check if the param is provided by url to apply zoom param or region param
+	//CHECK genomeviewer checks if the param is provided by url to apply zoom param or region param
 	region.url = url.param('region');
 
     //visualiaztion URL paramaters
@@ -334,8 +333,8 @@ GenomeMaps.prototype.addTrack = function(trackType, trackTitle, objectid, host) 
 					gzip: true,
 					chunkSize:50000
 				},
-				filters:{},
-				options:{},
+//				filters:{},
+//				options:{},
 				featureConfig:FEATURE_CONFIG.gene
 			})
 		});
@@ -411,8 +410,6 @@ GenomeMaps.prototype.addTrack = function(trackType, trackTitle, objectid, host) 
 					gzip: true,
 					chunkSize:10000
 				},
-				filters:{},
-				options:{},
 				featureConfig:FEATURE_CONFIG.snp
 			})
 		});
@@ -733,7 +730,11 @@ GenomeMaps.prototype._loadInitialTracksConfig= function(){
             subChilds.push({text: trackType, iconCls:"icon-blue-box", leaf:true});
             if(checked){
                 var trackId = this.addTrack(trackType, trackType);
-                activeTracks.push({text: trackType, trackId:trackId, trackType:trackType ,checked:true, iconCls:"icon-blue-box", leaf:true});
+                if(trackId != null){
+                    activeTracks.push({text: trackType, trackId:trackId, trackType:trackType ,checked:true, iconCls:"icon-blue-box", leaf:true});
+                }else{
+                    console.log('track type not exists in the addTrack function');
+                }
             }
         }
     }
@@ -1155,6 +1156,43 @@ GenomeMaps.prototype._createTracksTreePanel = function(title, children) {
             menuDisabled: true,
             align: 'center',
             width:20,
+            icon:Compbio.images.edit,
+            renderer: function(value, metaData, record){
+                if(record.data.id == "localopencga"){
+                    this.icon = Compbio.images.edit;
+                    this.tooltip = "Edit OpenCGA ligth server host";
+                }else{
+                    this.icon = null;
+                }
+            },
+            handler:function(grid, rowIndex, colIndex, actionItem, event, record, row){
+                var idText = record.data.id;
+                if(idText == "localopencga"){
+                    Ext.Msg.prompt('OpenCGA light host', 'Please enter a new OpenCGA light host:', function(btn, text){
+                        if (btn == 'ok'){
+                            var checkHost = null;
+                            var testHost = test;
+                            $.ajax({url:testHost+"/admin?action=status",async:false,success:function(data){
+                                if(data.indexOf("it works") != -1 )
+                                    checkHost=true;
+                            }});
+                            if(checkHost){
+                                OPENCGA_LOCALHOST = testHost;
+                                record.set('tooltip', OPENCGA_LOCALHOST);
+                                Ext.example.msg("Cellbase Host","Host changed<br>"+OPENCGA_LOCALHOST);
+                            }else{
+                                Ext.example.msg("Cellbase Host","Not found");
+                            }
+                            //record.save();
+                        }
+                    },null,null,OPENCGA_LOCALHOST);
+                }
+            }
+        },{
+            xtype: 'actioncolumn',
+            menuDisabled: true,
+            align: 'center',
+            width:20,
             renderer: function(value, metaData, record){
                 if(record.data.id == "cellbase"){
                     this.icon = Compbio.images.info;
@@ -1188,7 +1226,7 @@ GenomeMaps.prototype._createTracksTreePanel = function(title, children) {
             xtype: 'actioncolumn',
             menuDisabled: true,
             align: 'center',
-            width:30,
+            width:20,
             icon: Compbio.images.add,
             renderer: function(value, metaData, record){
                 if (record.isLeaf()) {
@@ -1224,7 +1262,11 @@ GenomeMaps.prototype._createTracksTreePanel = function(title, children) {
                         var type = text;
                         var id = _this.addTrack(type, text);
                         var title = type;
-                        updateActiveTracksPanel(type, title, id, true);
+                        if(id != null){
+                            updateActiveTracksPanel(type, title, id, true);
+                        }else{
+                            console.log('track type not exists in the addTrack function');
+                        }
                     }
                     if(record.isAncestor(availableSt.getRootNode().findChild("id","das"))){
                         var type = 'das';
@@ -1295,7 +1337,7 @@ GenomeMaps.prototype._loadOpencgaTracks = function(response) {
 		var files = [];
 		for ( var j = 0; j < response.buckets[i].objects.length; j++) {
 			var opencgaObj = response.buckets[i].objects[j];
-			if(opencgaObj.fileType!='dir' && opencgaObj.fileFormat!='bai' && opencgaObj.fileFormat!='tbi'){
+			if(opencgaObj.fileType!='dir' &&  ( opencgaObj.fileFormat == 'bam' ||  opencgaObj.fileFormat == 'tbi' ) ){
 				opencgaObj["text"] = opencgaObj.fileName;
 				opencgaObj["icon"] = Compbio.images.r;
 				opencgaObj["leaf"] = true;

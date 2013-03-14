@@ -6,7 +6,9 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.1.1a-gpl/resources/css/ext-all-gray.css">
+	<!--<link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.2.0-gpl/resources/css/ext-all-gray.css">-->
 	<link rel="stylesheet" type="text/css" href="http://jsapi.bioinfo.cipf.es/ext-libs/ChemDoodleWeb/install/ChemDoodleWeb.css">
+	<!--<link rel="stylesheet" type="text/css" href="http://hub.chemdoodle.com/cwc/latest/ChemDoodleWeb.css">-->
 	<link rel="stylesheet" type="text/css" href="http://jsapi.bioinfo.cipf.es/ext-libs/jquery-plugins/jquery.qtip.min.css">
  	<link rel="stylesheet" type="text/css" href="http://jsapi.bioinfo.cipf.es/libs/resources/css/style.css">  
   
@@ -31,11 +33,14 @@
 	<!-- Ext-js -->
 	<script type="text/javascript" src="http://cdn.sencha.io/ext-4.1.1a-gpl/ext-all.js"></script>
 	<script type="text/javascript" src="http://cdn.sencha.io/ext-4.1.1a-gpl/examples/shared/examples.js"></script>
-	
+	<!--<script type="text/javascript" src="http://cdn.sencha.io/ext-4.2.0-gpl/ext-all.js"></script>-->
+	<!--<script type="text/javascript" src="http://cdn.sencha.io/ext-4.2.0-gpl/examples/shared/examples.js"></script>-->
+
 
 	<!-- jQuery -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	
+	<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+
 	<script type="text/javascript" src="http://jsapi.bioinfo.cipf.es/ext-libs/jquery-plugins/jquery.qtip.min.js"></script>
 	<script type="text/javascript" src="http://jsapi.bioinfo.cipf.es/ext-libs/jquery-plugins/jquery.sha1.js"></script>
 	<script type="text/javascript" src="http://jsapi.bioinfo.cipf.es/ext-libs/jquery-plugins/jquery.url.js"></script>
@@ -66,10 +71,12 @@
 	
 	
 	<!-- CHEMDOODLE -->
-	<script type="text/javascript" src="http://jsapi.bioinfo.cipf.es/ext-libs/ChemDoodleWeb/install/ChemDoodleWeb-libs.js"></script> 
-	<script type="text/javascript" src="http://jsapi.bioinfo.cipf.es/ext-libs/ChemDoodleWeb/install/ChemDoodleWeb.js"></script> 
-	
-	
+	<script type="text/javascript" src="http://jsapi.bioinfo.cipf.es/ext-libs/ChemDoodleWeb/install/ChemDoodleWeb-libs.js"></script>
+	<script type="text/javascript" src="http://jsapi.bioinfo.cipf.es/ext-libs/ChemDoodleWeb/install/ChemDoodleWeb.js"></script>
+	<!--<script type="text/javascript" src="http://hub.chemdoodle.com/cwc/latest/ChemDoodleWeb-libs.js"></script>-->
+	<!--<script type="text/javascript" src="http://hub.chemdoodle.com/cwc/latest/ChemDoodleWeb.js"></script>-->
+
+
 	<!-- genome-maps-config -->
 	<script type="text/javascript" src="./config/gm-config.js"></script>
 	
@@ -216,7 +223,7 @@
 	function test(ms,positions){
 		if (ms==null){ms = 200;}
 		if (positions==null){positions = 250000;}
-		genomeMaps.genomeViewer.trackSvgLayout.onMove.notify(-1)
+		genomeMaps.genomeViewer.trackSvgLayout.onMove.notify(-1);
 		setTimeout("test()", ms);
 		counter = counter + positions;
 	}
