@@ -20,6 +20,7 @@ OPENCGA_LOCALHOST = "http://localhost:61976/opencga/rest";
 if(window.location.host.indexOf("fsalavert")!=-1 ||
    window.location.host.indexOf("rsanchez")!=-1 ||
    window.location.host.indexOf("imedina")!=-1 ||
+   window.location.host.indexOf("localhost")!=-1 ||
    window.location.href.indexOf("http://bioinfo.cipf.es/apps-beta")!=-1
 ){
 
