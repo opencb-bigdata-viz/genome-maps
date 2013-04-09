@@ -26,7 +26,7 @@ function GenomeMaps(targetId, args) {
     this.title = "Genome Maps";
     this.description = "Genomic data visualization";
     this.wum = true;
-    this.version = "3.0.3";
+    this.version = "3.0.4";
 
 	this.trackIdCounter = 1;
 	
@@ -1215,10 +1215,10 @@ GenomeMaps.prototype._createTracksTreePanel = function(title, children) {
                 var text = record.data.text;
                 var idText = record.data.id;
                 if(idText == 'opencga'){
-                    open('http://bioinfo.cipf.es/docs/compbio/projects/visualization/doku.php?id=genome-maps:opencga_sever');
+                    open('http://wiki.opencb.org/projects/visualization/doku.php?id=genome-maps:opencga_sever');
                 }
                 if(idText == 'localopencga'){
-                    open('http://bioinfo.cipf.es/docs/compbio/projects/visualization/doku.php?id=genome-maps:opencga_light_sever');
+                    open('http://wiki.opencb.org/projects/visualization/doku.php?id=genome-maps:opencga_light_sever');
                 }
 
             }
