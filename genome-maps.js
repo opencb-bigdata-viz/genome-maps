@@ -864,7 +864,7 @@ GenomeMaps.prototype.getSidePanelItems = function() {
                     align: 'center',
                     tooltip: 'Remove',
                     width:30,
-                    icon: Compbio.images.del,
+                    icon: Utils.images.del,
                     handler: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
                         //this also fires itemclick event from tree panel
                         if(record.isLeaf()){
@@ -1156,10 +1156,10 @@ GenomeMaps.prototype._createTracksTreePanel = function(title, children) {
             menuDisabled: true,
             align: 'center',
             width:20,
-            icon:Compbio.images.edit,
+            icon:Utils.images.edit,
             renderer: function(value, metaData, record){
                 if(record.data.id == "localopencga"){
-                    this.icon = Compbio.images.edit;
+                    this.icon = Utils.images.edit;
                     this.tooltip = "Edit OpenCGA ligth server host";
                 }else{
                     this.icon = null;
@@ -1195,16 +1195,16 @@ GenomeMaps.prototype._createTracksTreePanel = function(title, children) {
             width:20,
             renderer: function(value, metaData, record){
                 if(record.data.id == "cellbase"){
-                    this.icon = Compbio.images.info;
+                    this.icon = Utils.images.info;
                     this.tooltip = CELLBASE_HOST;
                 }else if(record.data.id == "das"){
-                    this.icon = Compbio.images.info;
+                    this.icon = Utils.images.info;
                     this.tooltip = "Add custom DAS track";
                 }else if(record.data.id == "opencga"){
-                    this.icon = Compbio.images.info;
+                    this.icon = Utils.images.info;
                     this.tooltip = "OpenCGA server information link";
                 }else if(record.data.id == "localopencga"){
-                    this.icon = Compbio.images.info;
+                    this.icon = Utils.images.info;
                     this.tooltip = "OpenCGA light server information link";
                 }else{
                     this.tooltip = null;
@@ -1227,18 +1227,18 @@ GenomeMaps.prototype._createTracksTreePanel = function(title, children) {
             menuDisabled: true,
             align: 'center',
             width:20,
-            icon: Compbio.images.add,
+            icon: Utils.images.add,
             renderer: function(value, metaData, record){
                 if (record.isLeaf()) {
-                    this.icon = Compbio.images.add;
+                    this.icon = Utils.images.add;
                     this.tooltip = "Add";
                 }else{
                     if(record.data.id == "cellbase"){
-                        this.icon = Compbio.images.edit;
+                        this.icon = Utils.images.edit;
                     }else if(record.data.id == "das"){
-                        this.icon = Compbio.images.add;
+                        this.icon = Utils.images.add;
                     }else if(record.data.id == "localopencga"){
-                        this.icon = Compbio.images.refresh;
+                        this.icon = Utils.images.refresh;
                         this.tooltip = "Refresh local files";
                     }else{
                         this.icon = null;
@@ -1339,7 +1339,7 @@ GenomeMaps.prototype._loadOpencgaTracks = function(response) {
 			var opencgaObj = response.buckets[i].objects[j];
 			if(opencgaObj.fileType!='dir' &&  ( opencgaObj.fileFormat == 'bam' ||  opencgaObj.fileFormat == 'tbi' ) ){
 				opencgaObj["text"] = opencgaObj.fileName;
-				opencgaObj["icon"] = Compbio.images.r;
+				opencgaObj["icon"] = Utils.images.r;
 				opencgaObj["leaf"] = true;
 				opencgaObj["oid"] = opencgaObj.id || opencgaObj["oid"];
 				files.push(opencgaObj);
